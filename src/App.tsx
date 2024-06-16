@@ -11,10 +11,8 @@ function App() {
         <div>loading...</div>
       ) : (
         <>
-          {pokemons.map((pokemon) => {
-            return (
-              <img key={pokemon.name} src={pokemon.imgUrl} alt={pokemon.name} />
-            );
+          {pokemons.map((pokemon, index) => {
+            return <img key={index} src={pokemon.imgUrl} alt={pokemon.name} />;
           })}
         </>
       )}

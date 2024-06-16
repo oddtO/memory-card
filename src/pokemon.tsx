@@ -4,3 +4,4 @@ export type Pokemon = {
   imgUrl: url;
 };
 export const base = "https://pokeapi.co/api/v2/pokemon/";
+export const POKEMONS_IN_GAME = 12;
