@@ -5,6 +5,7 @@ import { base } from "./pokemon";
 export function usePokemonNames(names: readonly string[]) {
   const [imgUrls, setImgUrls] = useState<url[]>([]);
   useEffect(() => {
+    if (names.length == 0) return;
     const namePromises = names.map((name) => {
       return fetch(base + name)
         .then((response) => {
