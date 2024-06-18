@@ -1,0 +1,17 @@
+.homeLink {
+  display: flex;
+  gap: 0.5em;
+  align-items: center;
+
+  > img {
+    $img-size: 3em;
+
+    width: $img-size;
+    height: $img-size;
+  }
+
+  > span {
+    font-size: 1.5em;
+    color: white;
+  }
+}
