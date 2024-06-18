@@ -4,4 +4,8 @@ module.exports = {
     "stylelint-config-standard-scss",
     "stylelint-config-html",
   ],
+
+  rules: {
+    "selector-class-pattern": null,
+  },
 };

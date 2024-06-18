@@ -1,0 +1,33 @@
+.gameHolder {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-image: url("./assets/imgonline-com-ua-progressiveRouf48O76lTP.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  > *:nth-child(2) {
+    flex: auto;
+  }
+}
+
+.backgroundImg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cardCollectionWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 2em {
+    top: 0;
+  }
+}
