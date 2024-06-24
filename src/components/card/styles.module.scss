@@ -1,0 +1,53 @@
+.card {
+  width: 7em;
+  height: 7em;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: all 2s ease-in-out;
+
+  $perspective: 2000em;
+
+  &.cardEnter {
+    transform: perspective($perspective) rotateY(180deg) translateZ(1px);
+  }
+
+  &.cardEnterActive {
+    transform: perspective($perspective) rotateY(0deg) translateZ(1px);
+  }
+
+  &.cardExit {
+    transform: perspective($perspective) rotateY(0deg) translateZ(1px);
+  }
+
+  &.cardExitActive {
+    transform: perspective($perspective) rotateY(180deg) translateZ(1px);
+  }
+}
+
+.frontSide,
+.backSide {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.frontSide {
+  background-color: yellow;
+}
+
+.backSide {
+  background-color: blue;
+  transform: rotateY(180deg) translateZ(1px);
+}
+
+// @keyframes inf-rot {
+//   from {
+//     transform: perspective($perspective) rotateY(0deg);
+//   }
+//
+//   to {
+//     transform: perspective($perspective) rotateY(180deg);
+//   }
+// }
