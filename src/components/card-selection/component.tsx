@@ -2,10 +2,11 @@ import styles from "./styles.module.scss";
 import Card from "../card/component";
 import type { Pokemon } from "../../pokemon";
 import { useEffect, useState } from "react";
+import BulbaImg from "../../assets/bulba.png";
 
 const pokemonBase: Pokemon = {
   name: "bulbasaur",
-  imgUrl: "../../assets/bulba.png",
+  imgUrl: BulbaImg,
 };
 
 export default function CardSelection() {
@@ -20,7 +21,7 @@ export default function CardSelection() {
 
     const timer2 = setTimeout(() => {
       setPokemon((p) => {
-        return { ...p, name: "enedndnd" };
+        return { ...p, name: "Crabominable" };
       });
     }, 7000);
     return () => {

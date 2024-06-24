@@ -20,10 +20,16 @@ export default function Card({ pokemon }: { pokemon: Pokemon }) {
         }}
       >
         {(state) => {
-          console.log(state);
           return (
             <div className={styles.card} ref={nodeRef}>
-              <div className={styles.frontSide}>{pokemon.name}</div>
+              <div className={styles.frontSide}>
+                <figure>
+                  <img src={pokemon.imgUrl} alt={pokemon.name} />
+                  <figcaption>
+                    <h2>{pokemon.name}</h2>
+                  </figcaption>
+                </figure>
+              </div>
               <div className={styles.backSide}></div>
             </div>
           );
