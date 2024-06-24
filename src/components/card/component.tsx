@@ -52,6 +52,12 @@ export default function Card({ pokemon }: { pokemon: Pokemon }) {
     handleMouseLeave();
   }
 
+  const isFirstRenderRef = useRef(true);
+
+  if (isFirstRenderRef.current) {
+    isFirstRenderRef.current = false;
+    setTimeout(attachListeners);
+  }
   const cardMovementRestriction = 3.8;
   const cardStyle: CardCSS = {
     "--rotate-y": `${offsetCoords.x / (cardMovementRestriction * -1)}deg`,
