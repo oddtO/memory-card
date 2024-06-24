@@ -1,38 +1,42 @@
 import styles from "./styles.module.scss";
 import Card from "../card/component";
 import type { Pokemon } from "../../pokemon";
-import { useEffect, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import BulbaImg from "../../assets/bulba.png";
+import { updatePokemons } from "./updatePokemons";
 
 const pokemonBase: Pokemon = {
   name: "bulbasaur",
   imgUrl: BulbaImg,
 };
 
+const initialState = [pokemonBase, { name: "hello", imgUrl: BulbaImg }];
 export default function CardSelection() {
-  const [pokemon, setPokemon] = useState<Pokemon>(pokemonBase);
+  const [pokemons, dispatchUpdate] = useReducer(updatePokemons, initialState);
+
+  const addPokemon = (pokemon) => {
+    dispatchUpdate({ type: "add", value: pokemon });
+  };
+
+  const updatePokemon = (index, pokemon) => {
+    dispatchUpdate({ type: "update", index, value: pokemon });
+  };
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setPokemon((p) => {
-        return { ...p, name: "hehw" };
-      });
+    setTimeout(() => {
+      updatePokemon(0, { ...pokemonBase, name: "charmander" });
     }, 2000);
 
-    const timer2 = setTimeout(() => {
-      setPokemon((p) => {
-        return { ...p, name: "Crabominable" };
-      });
-    }, 7000);
-    return () => {
-      clearTimeout(timer);
-      clearTimeout(timer2);
-    };
+    setTimeout(() => {
+      addPokemon({ name: "squirtle", imgUrl: BulbaImg });
+    }, 4000);
   }, []);
 
   return (
     <div className={styles.collection}>
-      <Card pokemon={pokemon}></Card>
+      {pokemons.map((pokemon) => (
+        <Card pokemon={pokemon} />
+      ))}
     </div>
   );
 }
