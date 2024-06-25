@@ -5,7 +5,8 @@ import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import BulbaImg from "../../assets/bulba.png";
 import { updatePokemons } from "./updatePokemons";
 import type { ClickablePokemon } from "./updatePokemons";
-
+import { useScore } from "../../score-context";
+import { shuffle } from "lodash";
 const pokemonBase: ClickablePokemon = {
   name: "bulbasaur",
   imgUrl: BulbaImg,
@@ -24,11 +25,16 @@ const initialState = [
   { name: "bulbasaur8", imgUrl: BulbaImg, isClicked: false },
   { name: "bulbasaur9", imgUrl: BulbaImg, isClicked: false },
 ];
+
+const shuffledInitialState = shuffle(initialState);
 export default function CardSelection() {
-  const [pokemons, dispatchUpdate] = useReducer(updatePokemons, initialState);
+  const [pokemons, dispatchUpdate] = useReducer(
+    updatePokemons,
+    shuffledInitialState,
+  );
 
   const [turnCount, setTurnCount] = useState(0);
-
+  const [, setCurrentScore] = useScore();
   const shufflePokemons = () => {
     dispatchUpdate({ type: "shuffle" });
   };
@@ -36,11 +42,18 @@ export default function CardSelection() {
     dispatchUpdate({ type: "update", index, value: pokemon });
   };
 
+  const resetGame = () => {
+    dispatchUpdate({ type: "resetGame" });
+  };
+
   const clickPokemon = (pokemon: ClickablePokemon, index: number) => {
+    setTurnCount(turnCount + 1);
     if (pokemon.isClicked) {
       alert("is clicked already");
+      setCurrentScore(0);
+      resetGame();
     } else {
-      setTurnCount(turnCount + 1);
+      setCurrentScore((currentScore: number) => currentScore + 1);
       updatePokemon(index, {
         ...pokemon,
         isClicked: true,

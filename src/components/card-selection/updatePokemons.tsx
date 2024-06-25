@@ -1,9 +1,8 @@
 import _ from "lodash";
 import type { Pokemon } from "../../pokemon";
 type Action =
-  | { type: "add"; value: ClickablePokemon }
   | { type: "update"; index: number; value: ClickablePokemon }
-  | { type: "shuffle" };
+  | { type: "shuffle" | "resetGame" };
 
 type Clickable = {
   isClicked: boolean;
@@ -20,12 +19,19 @@ export function updatePokemons(
       return shuffle(state);
     case "update":
       return updatePokemon(state, action.index, action.value);
+    case "resetGame":
+      return shuffle(resetClicks(state));
     default:
       throw new Error(`Unknown action type:`);
       return;
   }
 }
 
+function resetClicks(state: ClickablePokemon[]) {
+  return state.map((pokemon) => {
+    return { ...pokemon, isClicked: false };
+  });
+}
 function shuffle(state: ClickablePokemon[]) {
   return _.shuffle(state);
 }

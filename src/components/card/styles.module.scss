@@ -14,19 +14,19 @@
     rotateY(var(--rotate-y));
 
   &.cardEnter {
-    transform: perspective($perspective) rotateY(180deg) translateZ(1px);
+    transform: perspective($perspective) rotateY(180deg);
   }
 
   &.cardEnterActive {
-    transform: perspective($perspective) rotateY(0deg) translateZ(1px);
+    transform: perspective($perspective) rotateY(0deg);
   }
 
   &.cardExit {
-    transform: perspective($perspective) rotateY(0deg) translateZ(1px);
+    transform: perspective($perspective) rotateY(0deg);
   }
 
   &.cardExitActive {
-    transform: perspective($perspective) rotateY(180deg) translateZ(1px);
+    transform: perspective($perspective) rotateY(180deg);
   }
 }
 
