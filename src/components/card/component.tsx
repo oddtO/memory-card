@@ -71,7 +71,11 @@ export default function Card({
 
   if (isFirstRenderRef.current) {
     isFirstRenderRef.current = false;
-    setTimeout(attachListeners);
+    setTimeout(() => {
+      attachListeners();
+      const card = frontSideRef.current!.parentElement;
+      card!.classList.remove(styles.cardEnter);
+    });
   }
   const cardMovementRestriction = 3.8;
   const cardStyle: CardCSS = {
@@ -102,7 +106,11 @@ export default function Card({
       >
         {() => {
           return (
-            <div className={styles.card} ref={nodeRef} style={cardStyle}>
+            <div
+              className={styles.card + " " + styles.cardEnter}
+              ref={nodeRef}
+              style={cardStyle}
+            >
               <div className={styles.frontSide} ref={frontSideRef}>
                 <figure>
                   <img src={pokemon.imgUrl} alt={pokemon.name} />
