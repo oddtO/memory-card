@@ -4,6 +4,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1em;
+  padding: 1em {
+    top: 2em;
+    bottom: 2em;
+  }
   color: white;
 }

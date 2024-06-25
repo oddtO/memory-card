@@ -10,7 +10,19 @@ const pokemonBase: Pokemon = {
   imgUrl: BulbaImg,
 };
 
-const initialState = [pokemonBase, { name: "hello", imgUrl: BulbaImg }];
+const initialState = [
+  pokemonBase,
+  pokemonBase,
+  pokemonBase,
+  pokemonBase,
+  pokemonBase,
+  pokemonBase,
+  pokemonBase,
+  pokemonBase,
+  pokemonBase,
+  pokemonBase,
+  pokemonBase,
+];
 export default function CardSelection() {
   const [pokemons, dispatchUpdate] = useReducer(updatePokemons, initialState);
 
@@ -21,16 +33,6 @@ export default function CardSelection() {
   const updatePokemon = (index, pokemon) => {
     dispatchUpdate({ type: "update", index, value: pokemon });
   };
-
-  useEffect(() => {
-    setTimeout(() => {
-      updatePokemon(0, { ...pokemonBase, name: "charmander" });
-    }, 2000);
-
-    setTimeout(() => {
-      addPokemon({ name: "squirtle", imgUrl: BulbaImg });
-    }, 4000);
-  }, []);
 
   return (
     <div className={styles.collection}>

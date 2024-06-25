@@ -9,4 +9,19 @@
   gap: 2em;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+  overflow: auto;
+  padding: 2em 1em;
+
+  @media screen and (width >= 360px) and (width <= 400px) {
+    font-size: 0.8em;
+    gap: 1em;
+  }
+
+  @media screen and (width <= 360px) {
+    font-size: 0.6em;
+    gap: 1em;
+  }
+
+  font-size: 1.2em;
 }
