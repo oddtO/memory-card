@@ -1,11 +1,18 @@
 import type { Pokemon } from "../../pokemon";
 type Action =
-  | { type: "add"; value: Pokemon }
-  | { type: "update"; index: number; value: Pokemon };
+  | { type: "add"; value: ClickablePokemon }
+  | { type: "update"; index: number; value: ClickablePokemon };
 
-type Pokemons = Pokemon[];
+type Clickable = {
+  isClicked: boolean;
+};
 
-export function updatePokemons(state: Pokemons, action: Action): Pokemons {
+export type ClickablePokemon = Pokemon & Clickable;
+
+export function updatePokemons(
+  state: ClickablePokemon[],
+  action: Action,
+): ClickablePokemon[] {
   switch (action.type) {
     case "add":
       return addPokemon(state, action.value);
@@ -17,10 +24,14 @@ export function updatePokemons(state: Pokemons, action: Action): Pokemons {
   }
 }
 
-function addPokemon(state: Pokemons, pokemon: Pokemon) {
+function addPokemon(state: ClickablePokemon[], pokemon: ClickablePokemon) {
   return [...state, pokemon];
 }
 
-function updatePokemon(state: Pokemons, index: number, pokemon: Pokemon) {
-  return [...state.slice(0, index), pokemon, ...state.slice(index + 1)];
+function updatePokemon(
+  state: ClickablePokemon[],
+  index: number,
+  pokemon: ClickablePokemon,
+) {
+  return state.map((p, i) => (i === index ? pokemon : p));
 }

@@ -9,6 +9,7 @@ type CardCSS = React.CSSProperties & {
 };
 
 import { CSSTransitionProps } from "react-transition-group/CSSTransition";
+import { ClickablePokemon } from "../card-selection/updatePokemons";
 function calculateCenter(node: HTMLDivElement) {
   const rect = node.getBoundingClientRect();
   const coords = {
@@ -18,7 +19,17 @@ function calculateCenter(node: HTMLDivElement) {
 
   return coords;
 }
-export default function Card({ pokemon }: { pokemon: Pokemon }) {
+export default function Card({
+  pokemon,
+  index,
+  turnCount,
+  clickCb,
+}: {
+  pokemon: ClickablePokemon;
+  index: number;
+  turnCount: number;
+  clickCb: (pokemon: ClickablePokemon, index: number) => void;
+}) {
   const nodeRef = useRef(null);
   const frontSideRef = useRef<HTMLDivElement>(null);
 
@@ -42,6 +53,9 @@ export default function Card({ pokemon }: { pokemon: Pokemon }) {
     const frontSideElem = frontSideRef.current;
     frontSideElem.onpointermove = handleMouseMove;
     frontSideElem.onpointerleave = handleMouseLeave;
+    frontSideElem.onclick = () => {
+      clickCb(pokemon, index);
+    };
   }
 
   function detachListeners() {
@@ -49,6 +63,7 @@ export default function Card({ pokemon }: { pokemon: Pokemon }) {
     const frontSideElem = frontSideRef.current;
     frontSideElem.onpointermove = null;
     frontSideElem.onpointerleave = null;
+    frontSideElem.onclick = null;
     handleMouseLeave();
   }
 
@@ -67,7 +82,7 @@ export default function Card({ pokemon }: { pokemon: Pokemon }) {
     <SwitchTransition mode="out-in">
       <CSSTransition
         ref={nodeRef as CSSTransitionProps["ref"]}
-        key={pokemon.name}
+        key={turnCount}
         addEndListener={(node, done) => {
           if (node.classList.contains(styles.cardExitActive)) detachListeners();
           else attachListeners();
