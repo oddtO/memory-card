@@ -34,7 +34,7 @@ export default function CardSelection() {
   );
 
   const [turnCount, setTurnCount] = useState(0);
-  const [, setCurrentScore] = useScore();
+  const [currentScore, setCurrentScore] = useScore();
   const shufflePokemons = () => {
     dispatchUpdate({ type: "shuffle" });
   };
@@ -53,13 +53,22 @@ export default function CardSelection() {
       setCurrentScore(0);
       resetGame();
     } else {
-      setCurrentScore((currentScore: number) => currentScore + 1);
+      setCurrentScore((currentScore: number) => {
+        return currentScore + 1;
+      });
+
       updatePokemon(index, {
         ...pokemon,
         isClicked: true,
       });
 
-      shufflePokemons();
+      if (currentScore + 1 === pokemons.length) {
+        resetGame();
+        setTimeout(() => {
+          setCurrentScore(0);
+          alert("you have won");
+        });
+      } else shufflePokemons();
     }
   };
 
