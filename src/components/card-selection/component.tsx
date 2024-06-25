@@ -13,39 +13,40 @@ const pokemonBase: ClickablePokemon = {
 };
 
 const initialState = [
-  pokemonBase,
-  pokemonBase,
-  pokemonBase,
-  pokemonBase,
-  pokemonBase,
-  pokemonBase,
-  pokemonBase,
-  pokemonBase,
-  pokemonBase,
-  pokemonBase,
-  pokemonBase,
+  { name: "bulbasaur0", imgUrl: BulbaImg, isClicked: false },
+  { name: "bulbasaur1", imgUrl: BulbaImg, isClicked: false },
+  { name: "bulbasaur2", imgUrl: BulbaImg, isClicked: false },
+  { name: "bulbasaur3", imgUrl: BulbaImg, isClicked: false },
+  { name: "bulbasaur4", imgUrl: BulbaImg, isClicked: false },
+  { name: "bulbasaur5", imgUrl: BulbaImg, isClicked: false },
+  { name: "bulbasaur6", imgUrl: BulbaImg, isClicked: false },
+  { name: "bulbasaur7", imgUrl: BulbaImg, isClicked: false },
+  { name: "bulbasaur8", imgUrl: BulbaImg, isClicked: false },
+  { name: "bulbasaur9", imgUrl: BulbaImg, isClicked: false },
 ];
 export default function CardSelection() {
   const [pokemons, dispatchUpdate] = useReducer(updatePokemons, initialState);
 
   const [turnCount, setTurnCount] = useState(0);
-  const addPokemon = (pokemon: ClickablePokemon) => {
-    dispatchUpdate({ type: "add", value: pokemon });
-  };
 
+  const shufflePokemons = () => {
+    dispatchUpdate({ type: "shuffle" });
+  };
   const updatePokemon = (index: number, pokemon: ClickablePokemon) => {
     dispatchUpdate({ type: "update", index, value: pokemon });
   };
 
   const clickPokemon = (pokemon: ClickablePokemon, index: number) => {
-    setTurnCount(turnCount + 1);
     if (pokemon.isClicked) {
       alert("is clicked already");
     } else {
+      setTurnCount(turnCount + 1);
       updatePokemon(index, {
         ...pokemon,
         isClicked: true,
       });
+
+      shufflePokemons();
     }
   };
 
