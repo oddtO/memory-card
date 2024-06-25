@@ -1,4 +1,5 @@
 import "./reset.css";
+import "./app.css";
 import { usePokemons } from "./use-pokemons";
 import CardSelection from "./components/card-selection/component";
 import Heading from "./components/heading/component";
