@@ -25,7 +25,7 @@ export function useFetchPokemons() {
   const [pokemons, setPokemons] = useState<ClickablePokemon[]>([]);
   useEffect(() => {
     const pokemonPromises: Promise<ClickablePokemon>[] = [];
-    for (let i = 1; i < POKEMONS_IN_GAME; i++) {
+    for (let i = 1; i <= POKEMONS_IN_GAME; i++) {
       const promise = fetch(base + i)
         .then((response) => {
           return response.json();

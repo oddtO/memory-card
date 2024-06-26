@@ -11,7 +11,7 @@ import LostScreen from "./components/lost-screen/component";
 import type { ContextState } from "./score-context";
 import { GameStatusContext } from "./game-status-context";
 function App() {
-  const pokemons = usePokemons();
+  const { pokemons } = usePokemons();
 
   const [currentScore, setCurrentScore] = useState(0);
   const [gameStatus, setGameStatus] = useState<"playing" | "won" | "lost">(
