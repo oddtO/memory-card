@@ -7,6 +7,7 @@ import { updatePokemons } from "./updatePokemons";
 import type { ClickablePokemon } from "./updatePokemons";
 import { useScore } from "../../score-context";
 import { shuffle } from "lodash";
+import { useSetGameStatus } from "../../game-status-context";
 const pokemonBase: ClickablePokemon = {
   name: "bulbasaur",
   imgUrl: BulbaImg,
@@ -17,13 +18,6 @@ const initialState = [
   { name: "bulbasaur0", imgUrl: BulbaImg, isClicked: false },
   { name: "bulbasaur1", imgUrl: BulbaImg, isClicked: false },
   { name: "bulbasaur2", imgUrl: BulbaImg, isClicked: false },
-  { name: "bulbasaur3", imgUrl: BulbaImg, isClicked: false },
-  { name: "bulbasaur4", imgUrl: BulbaImg, isClicked: false },
-  { name: "bulbasaur5", imgUrl: BulbaImg, isClicked: false },
-  { name: "bulbasaur6", imgUrl: BulbaImg, isClicked: false },
-  { name: "bulbasaur7", imgUrl: BulbaImg, isClicked: false },
-  { name: "bulbasaur8", imgUrl: BulbaImg, isClicked: false },
-  { name: "bulbasaur9", imgUrl: BulbaImg, isClicked: false },
 ];
 
 const shuffledInitialState = shuffle(initialState);
@@ -35,6 +29,7 @@ export default function CardSelection() {
 
   const [turnCount, setTurnCount] = useState(0);
   const [currentScore, setCurrentScore] = useScore();
+  const setGameStatus = useSetGameStatus();
   const shufflePokemons = () => {
     dispatchUpdate({ type: "shuffle" });
   };
@@ -49,8 +44,7 @@ export default function CardSelection() {
   const clickPokemon = (pokemon: ClickablePokemon, index: number) => {
     setTurnCount(turnCount + 1);
     if (pokemon.isClicked) {
-      alert("is clicked already");
-      setCurrentScore(0);
+      setGameStatus("lost");
       resetGame();
     } else {
       setCurrentScore((currentScore: number) => {
@@ -64,10 +58,7 @@ export default function CardSelection() {
 
       if (currentScore + 1 === pokemons.length) {
         resetGame();
-        setTimeout(() => {
-          setCurrentScore(0);
-          alert("you have won");
-        });
+        setGameStatus("won");
       } else shufflePokemons();
     }
   };

@@ -1,12 +1,10 @@
-import { createContext, useContext } from "react";
-
-type ContextState = [
+import { createCustomContext } from "./create-custom-context";
+export type ContextState = [
   number,
   (score: number | { (oldScore: number): number }) => void,
 ];
 
-export const scoreContext = createContext<ContextState>([0, () => {}]);
-
-export function useScore() {
-  return useContext(scoreContext);
-}
+export const [ScoreContext, useScore] = createCustomContext<ContextState>([
+  0,
+  () => {},
+]);
