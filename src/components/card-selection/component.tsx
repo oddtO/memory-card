@@ -4,7 +4,7 @@ import type { Pokemon } from "../../pokemon";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import BulbaImg from "../../assets/bulba.png";
 import { updatePokemons } from "./updatePokemons";
-import type { ClickablePokemon } from "./updatePokemons";
+import type { ClickablePokemon } from "../../pokemon";
 import { useScore } from "../../score-context";
 import { shuffle } from "lodash";
 import { useSetGameStatus } from "../../game-status-context";
@@ -21,10 +21,15 @@ const initialState = [
 ];
 
 const shuffledInitialState = shuffle(initialState);
-export default function CardSelection() {
+export default function CardSelection({
+  initialPokemons,
+}: {
+  initialPokemons: ClickablePokemon[];
+}) {
   const [pokemons, dispatchUpdate] = useReducer(
     updatePokemons,
-    shuffledInitialState,
+    initialPokemons,
+    shuffle,
   );
 
   const [turnCount, setTurnCount] = useState(0);

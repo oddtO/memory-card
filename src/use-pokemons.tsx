@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
 import { useFetchPokemons } from "./use-fetch-pokemons";
-import type { Pokemon } from "./pokemon";
-import { getPokemonNames } from "./get-pokemon-names";
+import type { ClickablePokemon } from "./pokemon";
 export function usePokemons() {
-  const pokemons: Pokemon[] = useFetchPokemons();
+  const pokemons: ClickablePokemon[] = useFetchPokemons();
 
   return pokemons;
 }

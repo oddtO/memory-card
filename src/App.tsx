@@ -11,7 +11,7 @@ import LostScreen from "./components/lost-screen/component";
 import type { ContextState } from "./score-context";
 import { GameStatusContext } from "./game-status-context";
 function App() {
-  // const pokemons = usePokemons();
+  const pokemons = usePokemons();
 
   const [currentScore, setCurrentScore] = useState(0);
   const [gameStatus, setGameStatus] = useState<"playing" | "won" | "lost">(
@@ -27,6 +27,9 @@ function App() {
     return [currentScore, setCurrentScore];
   }, [currentScore, setCurrentScore]);
 
+  if (pokemons.length === 0) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       {gameStatus == "won" && <WinScreen onPlayAgain={onPlayAgain} />}
@@ -38,7 +41,7 @@ function App() {
 
           <div className={styles.cardCollectionWrapper}>
             <GameStatusContext.Provider value={setGameStatus}>
-              <CardSelection></CardSelection>
+              <CardSelection initialPokemons={pokemons}></CardSelection>
             </GameStatusContext.Provider>
           </div>
         </div>

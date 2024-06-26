@@ -1,14 +1,8 @@
+import type { ClickablePokemon } from "../../pokemon";
 import _ from "lodash";
-import type { Pokemon } from "../../pokemon";
 type Action =
   | { type: "update"; index: number; value: ClickablePokemon }
   | { type: "shuffle" | "resetGame" };
-
-type Clickable = {
-  isClicked: boolean;
-};
-
-export type ClickablePokemon = Pokemon & Clickable;
 
 export function updatePokemons(
   state: ClickablePokemon[],

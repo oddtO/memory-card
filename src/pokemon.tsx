@@ -4,5 +4,10 @@ export type Pokemon = {
   imgUrl: url;
 };
 
+type Clickable = {
+  isClicked: boolean;
+};
+
+export type ClickablePokemon = Pokemon & Clickable;
 export const base = "https://pokeapi.co/api/v2/pokemon/";
 export const POKEMONS_IN_GAME = 12;

@@ -9,7 +9,7 @@ type CardCSS = React.CSSProperties & {
 };
 
 import { CSSTransitionProps } from "react-transition-group/CSSTransition";
-import { ClickablePokemon } from "../card-selection/updatePokemons";
+import { ClickablePokemon } from "../../pokemon";
 function calculateCenter(node: HTMLDivElement) {
   const rect = node.getBoundingClientRect();
   const coords = {
