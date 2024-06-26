@@ -69,14 +69,13 @@ export default function Card({
 
   const isFirstRenderRef = useRef(true);
 
-  if (isFirstRenderRef.current) {
+  useEffect(() => {
+    if (!isFirstRenderRef.current) return;
     isFirstRenderRef.current = false;
-    setTimeout(() => {
-      attachListeners();
-      const card = frontSideRef.current!.parentElement;
-      card!.classList.remove(styles.cardEnter);
-    });
-  }
+    attachListeners();
+    const card = frontSideRef.current!.parentElement;
+    card!.classList.remove(styles.cardEnter);
+  }, [attachListeners]);
   const cardMovementRestriction = 3.8;
   const cardStyle: CardCSS = {
     "--rotate-y": `${offsetCoords.x / (cardMovementRestriction * -1)}deg`,
