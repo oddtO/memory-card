@@ -1,0 +1,29 @@
+.loadingScreen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #00000090;
+  flex-direction: column;
+  z-index: 1;
+}
+
+.textInfo {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+
+  &.error {
+    color: #faac00;
+  }
+}
+
+.progressBar {
+  height: 0.5rem;
+  width: 80%;
+  background-color: white;
+  margin-top: 0.2em;
+  margin-bottom: 2em;
+}

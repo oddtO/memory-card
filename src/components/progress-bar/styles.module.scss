@@ -1,0 +1,14 @@
+.totalArea {
+  background-color: #fff;
+}
+
+.completedArea {
+  width: 100%;
+
+  --ratio: 0;
+
+  transform: scaleX(var(--ratio));
+  transform-origin: 0 0;
+  height: 100%;
+  background-color: orangered;
+}

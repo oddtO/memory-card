@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
-export function usePreloadImg(images: string[]) {
+export type Preloader = {
+  totalBytesToLoad: number;
+  bytesLoaded: number;
+  isFullBytesKnown: boolean;
+  imgUrls: string[];
+  isError: boolean;
+};
+export function usePreloadImg(images: string[]): Preloader {
   const [totalBytesToLoad, setTotalBytesToLoad] = useState(0);
   const [isFullBytesKnown, setIsFullBytesKnown] = useState(false);
   const [bytesLoaded, setBytesLoaded] = useState(0);
   const [imgUrls, setImgUrls] = useState<string[]>(new Array(images.length));
-
-  console.log(`${bytesLoaded}/${isFullBytesKnown ? totalBytesToLoad : "???"}`);
+  const [isError, setIsError] = useState(false);
   useEffect(() => {
     const progressForDiffImages = new Array(images.length).fill(0);
     let imageSizeAddedCount = 0;
@@ -21,6 +27,7 @@ export function usePreloadImg(images: string[]) {
         if (!isTotalAdded) {
           if (++imageSizeAddedCount === images.length)
             setIsFullBytesKnown(true);
+
           isTotalAdded = true;
           setTotalBytesToLoad((prev) => prev + event.total);
         }
@@ -38,6 +45,10 @@ export function usePreloadImg(images: string[]) {
           return [...imgUrls];
         });
       };
+
+      xhr.onerror = () => {
+        setIsError(true);
+      };
       return xhr;
     });
 
@@ -52,5 +63,6 @@ export function usePreloadImg(images: string[]) {
     totalBytesToLoad,
     bytesLoaded,
     imgUrls,
+    isError,
   };
 }
