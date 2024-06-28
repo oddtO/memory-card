@@ -38,8 +38,12 @@
   left: 1em;
   bottom: 1em;
   background-color: orange;
-  width: 3em;
-  height: 3em;
+
+  $btn-size: 4em;
+
+  border: none;
+  width: $btn-size;
+  height: $btn-size;
   border-radius: 50%;
   box-shadow: 0 0 0.5em #000;
 

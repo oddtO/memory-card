@@ -76,7 +76,7 @@ function App() {
               )}
             </GameStatusContext.Provider>
           </div>
-          <div
+          <button
             className={styles.audioToggler}
             onClick={() => setIsAudioMuted(!isAudioMuted)}
           >
@@ -87,7 +87,7 @@ function App() {
               src={LineIcon}
               alt="line icon"
             ></img>
-          </div>
+          </button>
         </div>
       </ScoreContext.Provider>
     </>
