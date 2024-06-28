@@ -1,3 +1,7 @@
 .winScreen {
   --outcome-color: #0f0;
+
+  > :first-child {
+    background-image: linear-gradient(yellow, green);
+  }
 }

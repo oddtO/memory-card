@@ -25,12 +25,12 @@
   }
 
   border-radius: 0.5em;
-  box-shadow: 0 0 0.5em 0.5em var(--outcome-color);
+  box-shadow: 0.2em 0.2em 0.5em 0 var(--outcome-color);
 
   > button {
     border: none;
     font-size: 1em;
-    background-color: rgb(120 120 120);
+    background-image: linear-gradient(yellow, red);
     font-weight: 900;
     padding: 1em;
     border-radius: 0.5em;

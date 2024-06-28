@@ -12,9 +12,11 @@ export default function EndScreen({
   outcomeClass: typeof styles.endScreen;
 }) {
   return (
-    <div className={styles.endScreen + " " + outcomeClass}>
+    <div
+      className={styles.endScreen + " " + outcomeClass}
+      style={{ backgroundImage: imgUrl }}
+    >
       <div className={styles.endScreenMessage}>
-        <img src={imgUrl} alt={statusText + " image"} />
         <p>{statusText}</p>
         <button onClick={onPlayAgain}>Play Again</button>
       </div>
