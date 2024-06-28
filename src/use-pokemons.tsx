@@ -1,7 +1,7 @@
 import { useFetchPokemons } from "./use-fetch-pokemons";
 import type { ClickablePokemon } from "./pokemon";
 import { usePreload } from "./use-preload";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 export function usePokemons() {
   const pokemons: ClickablePokemon[] = useFetchPokemons();
   const [isFinished, setIsFinished] = useState(false);

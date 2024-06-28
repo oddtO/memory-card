@@ -17,7 +17,6 @@ export function updatePokemons(
       return shuffle(resetClicks(state));
     default:
       throw new Error(`Unknown action type:`);
-      return;
   }
 }
 

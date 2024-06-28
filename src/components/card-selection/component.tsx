@@ -1,27 +1,24 @@
 import styles from "./styles.module.scss";
 import Card from "../card/component";
-import type { Pokemon } from "../../pokemon";
-import { useCallback, useEffect, useReducer, useRef, useState } from "react";
-import BulbaImg from "../../assets/bulba.png";
+import { useReducer, useState } from "react";
+// import BulbaImg from "../../assets/bulba.png";
 import { updatePokemons } from "./updatePokemons";
 import type { ClickablePokemon } from "../../pokemon";
 import { useScore } from "../../score-context";
 import { shuffle } from "lodash";
 import { useSetGameStatus } from "../../game-status-context";
-import CardFlipSound from "../../assets/Card Flip.mp3";
-const pokemonBase: ClickablePokemon = {
+/* const pokemonBase: ClickablePokemon = {
   name: "bulbasaur",
   imgUrl: BulbaImg,
   isClicked: false,
-};
+}; */
 
-const initialState = [
-  { name: "bulbasaur0", imgUrl: BulbaImg, isClicked: false },
-  { name: "bulbasaur1", imgUrl: BulbaImg, isClicked: false },
-  { name: "bulbasaur2", imgUrl: BulbaImg, isClicked: false },
-];
-
-const shuffledInitialState = shuffle(initialState);
+// const initialState = [
+//   { name: "bulbasaur0", imgUrl: BulbaImg, isClicked: false },
+//   { name: "bulbasaur1", imgUrl: BulbaImg, isClicked: false },
+//   { name: "bulbasaur2", imgUrl: BulbaImg, isClicked: false },
+//
+// const shuffledInitialState = shuffle(initialState);
 export default function CardSelection({
   initialPokemons,
   audioElem,

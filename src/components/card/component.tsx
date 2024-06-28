@@ -1,8 +1,6 @@
-import { useEffect, useMemo, useRef, useState, useCallback } from "react";
-import type { Pokemon } from "../../pokemon";
+import { useEffect, useRef, useState, useCallback } from "react";
 import styles from "./styles.module.scss";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
-import PokeballImg from "../../assets/1.jpg";
 
 type CardCSS = React.CSSProperties & {
   "--rotate-x": string;
