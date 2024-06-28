@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import type { ClickablePokemon } from "./pokemon";
 import { base, POKEMONS_IN_GAME } from "./pokemon";
 
-/* import Bulba from "./assets/bulba.png";
-async function fetch(url: string) {
+// import Bulba from "./assets/bulba.png";
+/* async function fetch(url: string) {
   //mock return pokemon
   return {
     json: async () => {

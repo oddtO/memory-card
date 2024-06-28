@@ -32,3 +32,35 @@
     top: 0;
   }
 }
+
+.audioToggler {
+  position: absolute;
+  left: 1em;
+  bottom: 1em;
+  background-color: orange;
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  box-shadow: 0 0 0.5em #000;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+
+  // false positive since it can never overlap with the top star selector
+  /* stylelint-disable no-descending-specificity */
+  > * {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 70%;
+  }
+
+  > .line {
+    width: 90%;
+    transform: translate(-50%, -50%) rotateZ(45deg);
+  }
+}

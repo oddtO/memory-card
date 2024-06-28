@@ -1,13 +1,15 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import type { Pokemon } from "../../pokemon";
 import styles from "./styles.module.scss";
 import { SwitchTransition, CSSTransition } from "react-transition-group";
+import PokeballImg from "../../assets/1.jpg";
 
 type CardCSS = React.CSSProperties & {
   "--rotate-x": string;
   "--rotate-y": string;
 };
 
+const AUDIO_FIRST_PART_DURATION = 200;
 import { CSSTransitionProps } from "react-transition-group/CSSTransition";
 import { ClickablePokemon } from "../../pokemon";
 function calculateCenter(node: HTMLDivElement) {
@@ -24,11 +26,15 @@ export default function Card({
   index,
   turnCount,
   clickCb,
+  audioElem,
+  backImgSrc,
 }: {
   pokemon: ClickablePokemon;
   index: number;
   turnCount: number;
   clickCb: (pokemon: ClickablePokemon, index: number) => void;
+  audioElem: HTMLAudioElement | null;
+  backImgSrc: string;
 }) {
   const nodeRef = useRef(null);
   const frontSideRef = useRef<HTMLDivElement>(null);
@@ -48,15 +54,18 @@ export default function Card({
     setOffsetCoords({ x: 0, y: 0 });
   }
 
-  function attachListeners() {
-    if (!frontSideRef.current) return;
-    const frontSideElem = frontSideRef.current;
-    frontSideElem.onpointermove = handleMouseMove;
-    frontSideElem.onpointerleave = handleMouseLeave;
-    frontSideElem.onclick = () => {
-      clickCb(pokemon, index);
-    };
-  }
+  const attachListeners = useCallback(
+    function attachListeners() {
+      if (!frontSideRef.current) return;
+      const frontSideElem = frontSideRef.current;
+      frontSideElem.onpointermove = handleMouseMove;
+      frontSideElem.onpointerleave = handleMouseLeave;
+      frontSideElem.onclick = () => {
+        clickCb(pokemon, index);
+      };
+    },
+    [clickCb, index, pokemon],
+  );
 
   function detachListeners() {
     if (!frontSideRef.current) return;
@@ -67,28 +76,46 @@ export default function Card({
     handleMouseLeave();
   }
 
-  const isFirstRenderRef = useRef(true);
+  const cardBeforeHideCb = (audioElem: HTMLAudioElement | null) => {
+    detachListeners();
 
+    if (!audioElem) return;
+
+    audioElem.play();
+
+    setTimeout(() => audioElem.pause(), AUDIO_FIRST_PART_DURATION);
+  };
+
+  const cardBeforeShowCb = (audioElem: HTMLAudioElement | null) => {
+    attachListeners();
+    audioElem?.play();
+  };
+  const cardMovementRestriction = 3.8;
+  const isFirstRenderRef = useRef(true);
+  const cardStyle: CardCSS = {
+    "--rotate-y": `${offsetCoords.x / (cardMovementRestriction * -1)}deg`,
+    "--rotate-x": `${offsetCoords.y / cardMovementRestriction}deg`,
+    transitionDelay: isFirstRenderRef.current ? "0.5s" : "",
+  };
   useEffect(() => {
     if (!isFirstRenderRef.current) return;
     isFirstRenderRef.current = false;
     attachListeners();
     const card = frontSideRef.current!.parentElement;
     card!.classList.remove(styles.cardEnter);
-  }, [attachListeners]);
-  const cardMovementRestriction = 3.8;
-  const cardStyle: CardCSS = {
-    "--rotate-y": `${offsetCoords.x / (cardMovementRestriction * -1)}deg`,
-    "--rotate-x": `${offsetCoords.y / cardMovementRestriction}deg`,
-  };
+    setTimeout(() => {
+      card!.style.transitionDelay = "";
+    }, parseFloat(card!.style.transitionDelay));
+  }, [attachListeners, audioElem]);
   return (
     <SwitchTransition mode="out-in">
       <CSSTransition
         ref={nodeRef as CSSTransitionProps["ref"]}
         key={turnCount}
         addEndListener={(node, done) => {
-          if (node.classList.contains(styles.cardExitActive)) detachListeners();
-          else attachListeners();
+          if (node.classList.contains(styles.cardExitActive))
+            cardBeforeHideCb(audioElem);
+          else cardBeforeShowCb(audioElem);
 
           function handleTransitionEnd() {
             done();
@@ -118,7 +145,9 @@ export default function Card({
                   </figcaption>
                 </figure>
               </div>
-              <div className={styles.backSide}></div>
+              <div className={styles.backSide}>
+                <img src={backImgSrc} alt="backside" />
+              </div>
             </div>
           );
         }}

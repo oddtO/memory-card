@@ -38,10 +38,19 @@
   top: 0;
   left: 0;
   border-radius: 10px;
+
+  img {
+    object-fit: contain;
+    width: 100%;
+    padding: 0 0.5em;
+    user-select: none;
+  }
 }
 
+$card-color: linear-gradient(to bottom, yellow 0%, yellow 30%, red 100%);
+
 .frontSide {
-  background-image: linear-gradient(to bottom, yellow 0%, yellow 30%, red 100%);
+  background-image: $card-color;
 
   > figure {
     width: 100%;
@@ -54,10 +63,7 @@
   }
 
   img {
-    object-fit: contain;
     width: 100%;
-    padding: 0 0.5em;
-    user-select: none;
   }
 
   figcaption {
@@ -71,6 +77,13 @@
 .backSide {
   background-color: blue;
   transform: rotateY(180deg) translateZ(1px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 80%;
+  }
 }
 
 // @keyframes inf-rot {

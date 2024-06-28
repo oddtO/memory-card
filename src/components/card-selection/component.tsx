@@ -8,6 +8,7 @@ import type { ClickablePokemon } from "../../pokemon";
 import { useScore } from "../../score-context";
 import { shuffle } from "lodash";
 import { useSetGameStatus } from "../../game-status-context";
+import CardFlipSound from "../../assets/Card Flip.mp3";
 const pokemonBase: ClickablePokemon = {
   name: "bulbasaur",
   imgUrl: BulbaImg,
@@ -23,8 +24,12 @@ const initialState = [
 const shuffledInitialState = shuffle(initialState);
 export default function CardSelection({
   initialPokemons,
+  audioElem,
+  backImgSrc,
 }: {
   initialPokemons: ClickablePokemon[];
+  audioElem: HTMLAudioElement | null;
+  backImgSrc: string;
 }) {
   const [pokemons, dispatchUpdate] = useReducer(
     updatePokemons,
@@ -68,16 +73,20 @@ export default function CardSelection({
   };
 
   return (
-    <div className={styles.collection}>
-      {pokemons.map((pokemon, index) => (
-        <Card
-          key={index}
-          pokemon={pokemon}
-          turnCount={turnCount}
-          index={index}
-          clickCb={clickPokemon}
-        />
-      ))}
-    </div>
+    <>
+      <div className={styles.collection}>
+        {pokemons.map((pokemon, index) => (
+          <Card
+            key={index}
+            pokemon={pokemon}
+            turnCount={turnCount}
+            index={index}
+            clickCb={clickPokemon}
+            audioElem={index == pokemons.length - 1 ? audioElem : null}
+            backImgSrc={backImgSrc}
+          />
+        ))}
+      </div>
+    </>
   );
 }
