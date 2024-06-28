@@ -3,21 +3,28 @@ export type Preloader = {
   totalBytesToLoad: number;
   bytesLoaded: number;
   isFullBytesKnown: boolean;
-  imgUrls: string[];
+  assetUrls: string[];
   isError: boolean;
+  isLoaded: () => boolean;
 };
-export function usePreloadImg(images: string[]): Preloader {
+
+function isLoaded(this: Preloader) {
+  return this.isFullBytesKnown && this.bytesLoaded == this.totalBytesToLoad;
+}
+export function usePreload(assets: string[]): Preloader {
   const [totalBytesToLoad, setTotalBytesToLoad] = useState(0);
   const [isFullBytesKnown, setIsFullBytesKnown] = useState(false);
   const [bytesLoaded, setBytesLoaded] = useState(0);
-  const [imgUrls, setImgUrls] = useState<string[]>(new Array(images.length));
+  const [assetUrls, setAssetUrls] = useState<string[]>(
+    new Array(assets.length),
+  );
   const [isError, setIsError] = useState(false);
   useEffect(() => {
-    const progressForDiffImages = new Array(images.length).fill(0);
-    let imageSizeAddedCount = 0;
-    const xhrs = images.map((image, index) => {
+    const progressForDiffAssets = new Array(assets.length).fill(0);
+    let assetSizeAddedCount = 0;
+    const xhrs = assets.map((asset, index) => {
       const xhr = new XMLHttpRequest();
-      xhr.open("GET", image, true);
+      xhr.open("GET", asset, true);
 
       xhr.responseType = "blob";
       xhr.send();
@@ -25,7 +32,7 @@ export function usePreloadImg(images: string[]): Preloader {
       xhr.onprogress = (event) => {
         if (!event.lengthComputable) return;
         if (!isTotalAdded) {
-          if (++imageSizeAddedCount === images.length)
+          if (++assetSizeAddedCount === assets.length)
             setIsFullBytesKnown(true);
 
           isTotalAdded = true;
@@ -33,16 +40,16 @@ export function usePreloadImg(images: string[]): Preloader {
         }
 
         const loadedOnThisIteration =
-          event.loaded - progressForDiffImages[index];
+          event.loaded - progressForDiffAssets[index];
         setBytesLoaded((prev) => prev + loadedOnThisIteration);
-        progressForDiffImages[index] = event.loaded;
+        progressForDiffAssets[index] = event.loaded;
       };
 
       xhr.onload = () => {
         const imgUrl = URL.createObjectURL(xhr.response);
-        setImgUrls((imgUrls) => {
-          imgUrls[index] = imgUrl;
-          return [...imgUrls];
+        setAssetUrls((assetUrls) => {
+          assetUrls[index] = imgUrl;
+          return [...assetUrls];
         });
       };
 
@@ -56,13 +63,14 @@ export function usePreloadImg(images: string[]): Preloader {
       xhrs.forEach((xhr) => {
         xhr.abort();
       });
-  }, [images]);
+  }, [assets]);
 
   return {
     isFullBytesKnown,
     totalBytesToLoad,
     bytesLoaded,
-    imgUrls,
+    assetUrls,
     isError,
+    isLoaded,
   };
 }

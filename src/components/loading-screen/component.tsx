@@ -1,35 +1,50 @@
 import styles from "./styles.module.scss";
-import type { Preloader } from "../../use-preload-img";
+import type { Preloader } from "../../use-preload";
 import ProgressBar from "../progress-bar/component";
-export default function LoadingScreen({ preloader }: { preloader: Preloader }) {
+export default function LoadingScreen({
+  preloaders,
+}: {
+  preloaders: Preloader[];
+}) {
   let detailedText;
 
-  if (preloader.isError) {
+  const isAnyError = preloaders.some((preloader) => preloader.isError);
+  const isTotalFullBytesKnown = preloaders.every(
+    (preloader) => preloader.isFullBytesKnown,
+  );
+  if (isAnyError) {
     detailedText = "Network error occured while loading";
-  } else if (!preloader.isFullBytesKnown) {
+  } else if (!isTotalFullBytesKnown) {
     detailedText = "Calculating content size...";
-  } else if (preloader.bytesLoaded < preloader.totalBytesToLoad) {
-    detailedText = "Loading images...";
+  } else {
+    detailedText = "Loading assets...";
   }
+
+  const totalBytesLoaded = preloaders.reduce(
+    (acc, preloader) => acc + preloader.bytesLoaded,
+    0,
+  );
+
+  const totalBytesToLoad = preloaders.reduce(
+    (acc, preloader) => acc + preloader.totalBytesToLoad,
+    0,
+  );
+
   return (
     <div className={styles.loadingScreen}>
       <div
         className={styles.textInfo}
-      >{`${convertToKb(preloader.bytesLoaded)} / ${preloader.isFullBytesKnown ? convertToKb(preloader.totalBytesToLoad) : "???"}`}</div>
+      >{`${convertToKb(totalBytesLoaded)} / ${isTotalFullBytesKnown ? convertToKb(totalBytesToLoad) : "???"}`}</div>
       <ProgressBar
         className={styles.progressBar}
-        value={preloader.bytesLoaded}
-        max={preloader.isFullBytesKnown ? preloader.totalBytesToLoad : Infinity}
+        value={totalBytesLoaded}
+        max={isTotalFullBytesKnown ? totalBytesToLoad : Infinity}
       ></ProgressBar>
-      <div
-        className={
-          styles.textInfo + (preloader.isError ? " " + styles.error : "")
-        }
-      >
+      <div className={styles.textInfo + (isAnyError ? " " + styles.error : "")}>
         {detailedText}
       </div>
 
-      {preloader.isError && (
+      {isAnyError && (
         <div className={styles.textInfo}>
           Check your internet connection and refresh the page
         </div>

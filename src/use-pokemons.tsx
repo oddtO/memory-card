@@ -1,6 +1,6 @@
 import { useFetchPokemons } from "./use-fetch-pokemons";
 import type { ClickablePokemon } from "./pokemon";
-import { usePreloadImg } from "./use-preload-img";
+import { usePreload } from "./use-preload";
 import { useEffect, useMemo, useState } from "react";
 export function usePokemons() {
   const pokemons: ClickablePokemon[] = useFetchPokemons();
@@ -8,7 +8,7 @@ export function usePokemons() {
   const memoPokemonsUrls = useMemo(() => {
     return pokemons.map((pokemon) => pokemon.imgUrl);
   }, [pokemons]);
-  const preloader = usePreloadImg(memoPokemonsUrls);
+  const preloader = usePreload(memoPokemonsUrls);
 
   useMemo(() => {
     if (
@@ -16,7 +16,7 @@ export function usePokemons() {
       preloader.bytesLoaded == preloader.totalBytesToLoad
     ) {
       pokemons.forEach((pokemon, index) => {
-        pokemon.imgUrl = preloader.imgUrls[index];
+        pokemon.imgUrl = preloader.assetUrls[index];
       });
       setIsFinished(true);
     }
@@ -25,7 +25,7 @@ export function usePokemons() {
     preloader.bytesLoaded,
     preloader.isFullBytesKnown,
     preloader.totalBytesToLoad,
-    preloader.imgUrls,
+    preloader.assetUrls,
   ]);
 
   return { pokemons: isFinished ? pokemons : [], isFinished, preloader };
