@@ -1,30 +1,86 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Deployment
 
-## Expanding the ESLint configuration
+* [See on netlify](https://frolicking-mochi-e38496.netlify.app/)
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
 
-- Configure the top-level `parserOptions` property like this:
+<!-- GETTING STARTED -->
+## Getting Started
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Prerequisites
+
+You will need `Node.js` and `npm` installed globally on your machine.
+* [Downloading and installing Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/oddtO/memory-card.git
+   ```
+2. Install NPM packages
+   ```sh
+   npm install
+   ```
+3. Run dev server on http://localhost:5173
+   ```sh
+   npm run dev
+   ```
+4. Compile for production
+   ```sh
+   npm run build
+   ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Features
+
+* Fetch pokemon images from external api.
+* Loading screen with progress bar while fetching data.
+* Game lost when the same card is clicked twice.
+* Game won if all cards are clicked once.
+* Keep track of score and best score.
+* Animated card flip.
+* Ability to enable sound.
+
+
+### Built With
+
+#### Technologies
+
+* Typescript
+* React
+* SCSS
+* HTML
+* Vite
+* Git
+
+
+
+
+
+
+<!-- AUTHORS -->
+## Author
+
+* [Github](https://github.com/oddtO)
+* [LinkedIn](https://www.linkedin.com/in/dmytro-yefimov-316690207/)
+* [Dou](https://dou.ua/users/oddto/)
+<p align="right">(<a href="#top">back to top</a>)</p>
